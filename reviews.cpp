@@ -205,11 +205,13 @@ int main()
     if(!file.is_open())
     {
         cout << "Error opening file: " << filename << endl;
+        return 1;
     }
     
     Classifier classifier(filename);
     cout << "Processing..." << endl;
     classifier.process();
+
     cout << "Review reports ready!" << endl;
     cout << "Enter 0 for overview of data" << endl;
     cout << "Enter 1 for one star review reports" << endl;
@@ -221,6 +223,8 @@ int main()
     int choice;
     cin >> choice;
 
+while (choice != -1)
+{
     if(choice == 0)
     {
         classifier.print_misc_info();
@@ -247,9 +251,19 @@ int main()
     }
     else
     {
-        cout << "Invalid Input" << endl;
+        cout << "Invalid Input" << endl << endl;
     }
-    
+    cout << endl;
+    cout << "Enter 0 for overview of data" << endl;
+    cout << "Enter 1 for one star review reports" << endl;
+    cout << "Enter 2 for two star review reports" << endl;
+    cout << "Enter 3 for three star review reports" << endl;
+    cout << "Enter 4 for four star review reports" << endl;
+    cout << "Enter 5 for five star review reports" << endl;
+    cout << "Enter -1 to quit program" << endl;
+    cin >> choice;
+}
 
+    cout << '\n' << "Thank you for using the review analysis program!" << endl;
     return 0;
 }
