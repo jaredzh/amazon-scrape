@@ -79,28 +79,61 @@ class Classifier
 
     void one_star_report()
     {
-
+        vector<pair<string, int>> pairs;
     }
 
     void two_star_report()
     {
-        
+        vector<pair<string, int>> pairs;
     }
 
     void three_star_report()
     {
-        
+        vector<pair<string, int>> pairs;
     }
 
     void four_star_report()
     {
-        
+        vector<pair<string, int>> pairs;
     }
 
     void five_star_report()
     {
-        
+        vector<pair<string, int>> pairs;
     }
+
+    // Function tp find the Entry 
+    // with largest Value in a Map 
+    pair<string, int> findEntryWithLargestValue( 
+        map<string, int> sampleMap) 
+    { 
+  
+        // Reference variable to help find 
+        // the entry with the highest value 
+        pair<string, int> entryWithMaxValue 
+            = make_pair("", 0); 
+  
+        // Iterate in the map to find the required entry 
+        map<string, int>::iterator currentEntry; 
+        for (currentEntry = sampleMap.begin(); 
+            currentEntry != sampleMap.end(); 
+            ++currentEntry) { 
+  
+            // If this entry's value is more 
+            // than the max value 
+            // Set this entry as the max 
+            if (currentEntry->second 
+                > entryWithMaxValue.second) { 
+  
+                entryWithMaxValue 
+                    = make_pair( 
+                        currentEntry->first, 
+                        currentEntry->second); 
+            } 
+        } 
+  
+        return entryWithMaxValue;
+    } 
 
     private:
     map<string, int> one_star_reviews;
