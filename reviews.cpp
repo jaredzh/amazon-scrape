@@ -92,6 +92,11 @@ class Classifier
             pairs.push_back(temp);
             one_star_reviews.erase(temp.first);
         }
+        cout << "*** One Star Reviews Summary ***" << endl;
+        for(pair<string, int> pair : pairs)
+        {
+            cout << "\"" << pair.first << "\"" << " occurred " << pair.second << " times." << endl;
+        }
     }
 
     void two_star_report()
@@ -103,6 +108,11 @@ class Classifier
             pair<string, int> temp = findEntryWithLargestValue(two_star_reviews);
             pairs.push_back(temp);
             two_star_reviews.erase(temp.first);
+        }
+        cout << "*** Two Star Reviews Summary ***" << endl;
+        for(pair<string, int> pair : pairs)
+        {
+            cout << "\"" << pair.first << "\"" << " occurred " << pair.second << " times." << endl;
         }
     }
 
@@ -116,6 +126,11 @@ class Classifier
             pairs.push_back(temp);
             three_star_reviews.erase(temp.first);
         }
+        cout << "*** Three Star Reviews Summary ***" << endl;
+        for(pair<string, int> pair : pairs)
+        {
+            cout << "\"" << pair.first << "\"" << " occurred " << pair.second << " times." << endl;
+        }
     }
 
     void four_star_report()
@@ -128,6 +143,11 @@ class Classifier
             pairs.push_back(temp);
             four_star_reviews.erase(temp.first);
         }
+        cout << "*** Four Star Reviews Summary ***" << endl;
+        for(pair<string, int> pair : pairs)
+        {
+            cout << "\"" << pair.first << "\"" << " occurred " << pair.second << " times." << endl;
+        }
     }
 
     void five_star_report()
@@ -139,6 +159,11 @@ class Classifier
             pair<string, int> temp = findEntryWithLargestValue(five_star_reviews);
             pairs.push_back(temp);
             five_star_reviews.erase(temp.first);
+        }
+        cout << "*** Five Star Reviews Summary ***" << endl;
+        for(pair<string, int> pair : pairs)
+        {
+            cout << "\"" << pair.first << "\"" << " occurred " << pair.second << " times." << endl;
         }
     }
 
@@ -209,7 +234,7 @@ int main()
     }
     
     Classifier classifier(filename);
-    cout << "Processing..." << endl;
+    cout << '\n' << "Processing..." << endl;
     classifier.process();
 
     cout << "Review reports ready!" << endl;
@@ -235,19 +260,19 @@ while (choice != -1)
     }
     else if(choice == 2)
     {
-        classifier.one_star_report();
+        classifier.two_star_report();
     }
     else if(choice == 3)
     {
-        classifier.one_star_report();
+        classifier.three_star_report();
     }
     else if(choice == 4)
     {
-        classifier.one_star_report();
+        classifier.four_star_report();
     }
     else if(choice == 5)
     {
-        classifier.one_star_report();
+        classifier.five_star_report();
     }
     else
     {
