@@ -80,6 +80,17 @@
         "selector": "li.a-last a",
         "multiple": false,
         "delay": 0
+      },
+      {
+        "id": "style",
+        "type": "SelectorText",
+        "parentSelectors":[
+          "review"
+        ],
+        "selector": "a.a-size-mini.a-link-normal.a-color-secondary",
+        "multiple": false,
+        "regex": "",
+        "delay": 0
       }
     ]
   }
