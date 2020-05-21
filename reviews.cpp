@@ -10,7 +10,12 @@ using namespace std;
 
 static pair<string, int> findEntryWithLargestValue( 
     map<string, int> sampleMap);
+
 static void remove_common_words(map<string, int> &map_in);
+
+void to_lower(string &x);
+
+void remove_special_char(string &x);
 
 
 class Classifier
@@ -36,6 +41,7 @@ class Classifier
                 {
                     ++one_star_reviews[word];
                 }
+                total_stars+=1;
             }
             if(star == "2.0")
             {
@@ -45,6 +51,7 @@ class Classifier
                 {
                     ++two_star_reviews[word];
                 }
+                total_stars+=2;
             }
             if(star == "3.0")
             {
@@ -54,6 +61,7 @@ class Classifier
                 {
                     ++three_star_reviews[word];
                 }
+                total_stars+=3;
             }
             if(star == "4.0")
             {
@@ -63,6 +71,7 @@ class Classifier
                 {
                     ++four_star_reviews[word];
                 }
+                total_stars+=4;
             }
             if(star == "5.0")
             {
@@ -72,6 +81,7 @@ class Classifier
                 {
                     ++five_star_reviews[word];
                 }
+                total_stars+=5;
             }
             ++num_reviews;
         }
@@ -79,7 +89,8 @@ class Classifier
 
     void print_misc_info()
     {
-
+        cout << num_reviews << " analyzed" << endl;
+        cout << "Average stars: " << total_stars / (double) num_reviews << endl;
     }
 
     void one_star_report()
@@ -175,6 +186,7 @@ class Classifier
     map<string, int> five_star_reviews;
     string filename;
     int num_reviews;
+    int total_stars;
 };
 
 // Function tp find the Entry 
@@ -218,6 +230,27 @@ static void remove_common_words(map<string, int> &map_in)
     string word;
     while(in_file >> word)
         map_in.erase(word);
+}
+
+void to_lower(string &x)
+{
+    for(int i = 0; i < x.length(); i++)
+    {
+		if (x[i] > 64 && x[i] < 91){
+        x[i] = x[i] + 32;
+        }
+    }
+}
+
+void remove_special_char(string &x)
+{
+    for(int i = 0; i < x.length(); i++)
+    {
+        if((x[i] >= 32) && (x[i] < 97))
+        {
+            x.erase(x.begin()+i);
+        }
+    } 
 }
 
 int main()
