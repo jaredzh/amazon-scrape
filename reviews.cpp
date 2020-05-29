@@ -15,7 +15,7 @@ static void remove_common_words(map<string, int> &map_in);
 
 void to_lower(string &x);
 
-void remove_special_char(string &x);
+void remove_special_char(string &s);
 
 
 class Classifier
@@ -33,57 +33,85 @@ class Classifier
             string star;
             istringstream source(row["rating"]);
             source >> star;
+            istringstream content(row["content"] + row["title"]);
+            string word;
             if(star == "1.0")
             {
-                istringstream content(row["content"] + row["title"]);
-                string word;
                 while(content >> word)
                 {
+                    to_lower(word);
+                    remove_special_char(word);
                     ++one_star_reviews[word];
                 }
+                
                 total_stars+=1;
             }
             if(star == "2.0")
             {
-                istringstream content(row["content"] + row["title"]);
-                string word;
                 while(content >> word)
                 {
+                    to_lower(word);
+                    remove_special_char(word);
                     ++two_star_reviews[word];
                 }
                 total_stars+=2;
             }
             if(star == "3.0")
             {
-                istringstream content(row["content"] + row["title"]);
-                string word;
                 while(content >> word)
                 {
+                    to_lower(word);
+                    remove_special_char(word);
                     ++three_star_reviews[word];
                 }
                 total_stars+=3;
             }
             if(star == "4.0")
             {
-                istringstream content(row["content"] + row["title"]);
-                string word;
                 while(content >> word)
                 {
+                    to_lower(word);
+                    remove_special_char(word);
                     ++four_star_reviews[word];
                 }
                 total_stars+=4;
             }
             if(star == "5.0")
             {
-                istringstream content(row["content"] + row["title"]);
-                string word;
                 while(content >> word)
                 {
+                    to_lower(word);
+                    remove_special_char(word);
                     ++five_star_reviews[word];
                 }
                 total_stars+=5;
             }
             ++num_reviews;
+
+            istringstream review_date(row["date"]);
+            string date;
+            string junk;
+            string year;
+            for(int i = 0; i < 6; ++i)
+            {
+                review_date >> junk;
+            }
+            review_date >> date;
+            review_date >> junk;
+            review_date >> year;
+            date = date + " " + year;
+            try
+            {
+                avg_stars_by_date[date].first += stod(star);
+            }
+            catch(const std::invalid_argument e)
+            {
+            }
+            avg_stars_by_date[date].second += 1;
+        }
+        for(auto &pair : avg_stars_by_date)
+        {
+            (pair.second).first /= (pair.second).second;
         }
     }
 
@@ -184,6 +212,12 @@ class Classifier
     map<string, int> three_star_reviews;
     map<string, int> four_star_reviews;
     map<string, int> five_star_reviews;
+    map<string, int> one_star_phrases;
+    map<string, int> two_star_phrases;
+    map<string, int> three_star_phrases;
+    map<string, int> four_star_phrases;
+    map<string, int> five_star_phrases;
+    map<string, pair<double, int>> avg_stars_by_date;
     string filename;
     int num_reviews;
     int total_stars;
@@ -242,15 +276,22 @@ void to_lower(string &x)
     }
 }
 
-void remove_special_char(string &x)
+void remove_special_char(string &s)
 {
-    for(int i = 0; i < x.length(); i++)
-    {
-        if((x[i] >= 32) && (x[i] < 97))
-        {
-            x.erase(x.begin()+i);
-        }
-    } 
+    for (int i = 0; i < s.size(); i++) { 
+          
+        // Finding the character whose  
+        // ASCII value fall under this 
+        // range 
+        if ((s[i] < 'A' || s[i] > 'Z') && 
+            (s[i] < 'a' || s[i] > 'z')) 
+        {    
+            // erase function to erase  
+            // the character 
+            s.erase(i, 1);  
+            i--; 
+        } 
+    }
 }
 
 int main()
@@ -271,56 +312,40 @@ int main()
     classifier.process();
 
     cout << "Review reports ready!" << endl;
-    cout << "Enter 0 for overview of data" << endl;
     cout << "Enter 1 for one star review reports" << endl;
-    cout << "Enter 2 for two star review reports" << endl;
-    cout << "Enter 3 for three star review reports" << endl;
-    cout << "Enter 4 for four star review reports" << endl;
-    cout << "Enter 5 for five star review reports" << endl;
-    cout << "Enter -1 to quit program" << endl;
-    int choice;
+    cout << "Enter 12 for one and two star review reports" << endl;
+    cout << "Enter 145 for one , four, and five star review reports etc..." << endl;
+    
+    string choice;
     cin >> choice;
 
-while (choice != -1)
-{
-    if(choice == 0)
+    for(const char& c : choice)
     {
-        classifier.print_misc_info();
+        if(c == '1')
+        {
+            classifier.one_star_report();
+        }
+        else if (c == '2')
+        {
+            classifier.two_star_report();
+        }
+        else if (c == '3')
+        {
+            classifier.three_star_report();
+        }
+        else if (c == '4')
+        {
+            classifier.four_star_report();
+        }
+        else if (c == '5')
+        {
+            classifier.five_star_report();
+        }
+        else
+        {
+            cout << "Invalid Input!" << endl;
+        }
     }
-    else if(choice == 1)
-    {
-        classifier.one_star_report();
-    }
-    else if(choice == 2)
-    {
-        classifier.two_star_report();
-    }
-    else if(choice == 3)
-    {
-        classifier.three_star_report();
-    }
-    else if(choice == 4)
-    {
-        classifier.four_star_report();
-    }
-    else if(choice == 5)
-    {
-        classifier.five_star_report();
-    }
-    else
-    {
-        cout << "Invalid Input" << endl << endl;
-    }
-    cout << endl;
-    cout << "Enter 0 for overview of data" << endl;
-    cout << "Enter 1 for one star review reports" << endl;
-    cout << "Enter 2 for two star review reports" << endl;
-    cout << "Enter 3 for three star review reports" << endl;
-    cout << "Enter 4 for four star review reports" << endl;
-    cout << "Enter 5 for five star review reports" << endl;
-    cout << "Enter -1 to quit program" << endl;
-    cin >> choice;
-}
 
     cout << '\n' << "Thank you for using the review analysis program!" << endl;
     return 0;
