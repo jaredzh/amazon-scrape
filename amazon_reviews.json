@@ -49,6 +49,17 @@
         "delay": 0
       },
       {
+        "id": "next",
+        "type": "SelectorLink",
+        "parentSelectors": [
+          "_root",
+          "next"
+        ],
+        "selector": "li.a-last a",
+        "multiple": false,
+        "delay": 0
+      },
+      {
         "id": "content",
         "type": "SelectorText",
         "parentSelectors": [
@@ -68,17 +79,6 @@
         "selector": "span.a-icon-alt",
         "multiple": false,
         "regex": "",
-        "delay": 0
-      },
-      {
-        "id": "next",
-        "type": "SelectorLink",
-        "parentSelectors": [
-          "_root",
-          "next"
-        ],
-        "selector": "li.a-last a",
-        "multiple": false,
         "delay": 0
       },
       {
