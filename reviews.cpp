@@ -314,7 +314,7 @@ int main()
     cout << "Review reports ready!" << endl;
     cout << "Enter 1 for one star review reports" << endl;
     cout << "Enter 12 for one and two star review reports" << endl;
-    cout << "Enter 145 for one , four, and five star review reports etc..." << endl;
+    cout << "Enter 145 for one, four, and five star review reports etc..." << endl;
     
     string choice;
     cin >> choice;
@@ -344,6 +344,7 @@ int main()
         else
         {
             cout << "Invalid Input!" << endl;
+            return 1;
         }
     }
 
